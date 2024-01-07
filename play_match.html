@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: url('bg3.png') no-repeat center center fixed; 
+            background-size: cover;
+        }
+
+        @media (max-width: 767px) {
+            body {
+                background-size: 767px 100%;
+            }
+
+            .play-buttons-container{
+                width: 500px;
+                height: 70%;
+            }
+
+            .play-duck {
+                width: 140px;
+                height: 80px;
+                top: 385px;
+                left: 0;
+            }
+
+            .play-cat {
+                width: 180px;
+                height: 120px;
+                top: 220px;
+                left: 120px;
+                transform: translateX(-50%);
+            }
+
+            .play-chicken {
+                width: 180px;
+                height: 140px;
+                top: 350px;
+                left: 80px;
+                transform: translateX(-50%);
+            }
+
+            .play-dog {
+                width: 125px;
+                height: 120px;
+                top: 350px;
+                left: 30px;
+            }
+        }
+    </style>
+    <title>Gameplay - Match</title>
+</head>
+<body>
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="option-button"></button>
+        <div class="dropdown-content">
+            <button onclick="optionClicked('home')" id="home" class="home"></button>
+            <button onclick="optionClicked('sound')" id="sound" class="sound"></button>
+            <button onclick="optionClicked('music')" id="music" class="music"></button>
+            <button onclick="optionClicked('exit')" id="exit" class="exit"></button>
+            <button onclick="optionClicked('repeat')" id="repeat" class="repeat"></button>
+        </div>
+    </div>
+
+    <div class="play-buttons-container">
+        <button onclick="playGame('Duck')" class="play-button play-duck"></button>
+        <button onclick="playGame('Cat')" class="play-button play-cat"></button>
+        <button onclick="playGame('Chicken')" class="play-button play-chicken"></button>
+        <button onclick="playGame('Dog')" class="play-button play-dog"></button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let selectedAnimals = [];
+        alert("Choose the animals from the same species.");
+
+        function playGame(animal) {
+            clickAudio.play();
+            const animalIndex = selectedAnimals.indexOf(animal);
+
+            if (animalIndex === -1) {
+                // Animal not in the array, add it and highlight
+                selectedAnimals.push(animal);
+                document.querySelector(`.play-${animal.toLowerCase()}`).style.border = "3px solid #009e08";
+            } else {
+                // Animal already in the array, remove it and remove the highlight
+                selectedAnimals.splice(animalIndex, 1);
+                document.querySelector(`.play-${animal.toLowerCase()}`).style.border = "0px";
+            }
+
+            if (selectedAnimals.length === 2) {
+                setTimeout(() => {
+                    // Check if the selected animals belong to the same species
+                    const speciesMatched = checkSpeciesMatch(selectedAnimals);
+                    if (speciesMatched) {
+                        const species = getSpecies(selectedAnimals);
+                        alert(`Correct! Both ${species[0]} and ${species[1]} are ${species[2]}.`);
+                    } else {
+                        alert('Incorrect! Different species matched!');
+                    }
+                    // Remove the highlight
+                    document.querySelector(`.play-duck`).style.border = "0px";
+                    document.querySelector(`.play-cat`).style.border = "0px";
+                    document.querySelector(`.play-chicken`).style.border = "0px";
+                    document.querySelector(`.play-dog`).style.border = "0px";
+                    // Clear the selected animals array
+                    selectedAnimals = [];
+                }, 100);
+            }
+        }
+
+        function checkSpeciesMatch(selectedAnimals) {
+            // Map the animals to their species
+            const animalSpecies = {
+                Duck: 'Avian',
+                Cat: 'Mammal',
+                Chicken: 'Avian',
+                Dog: 'Mammal'
+            };
+
+            // Check if the species of the two selected animals match
+            return animalSpecies[selectedAnimals[0]] === animalSpecies[selectedAnimals[1]];
+        }
+
+        function getSpecies(selectedAnimals) {
+            // Map the animals to their species
+            const animalSpecies = {
+                Duck: 'Avian',
+                Cat: 'Mammal',
+                Chicken: 'Avian',
+                Dog: 'Mammal'
+            };
+
+            // Return an array with the names of the selected animals and their species
+            return [selectedAnimals[0], selectedAnimals[1], animalSpecies[selectedAnimals[0]]];
+        }
+    </script>
+</body>
+</html>

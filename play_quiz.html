@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: url('bg3.png') no-repeat center center fixed; 
+            background-size: cover;
+        }
+
+        @media (max-width: 767px) {
+            body {
+                background-size: 767px 100%;
+            }
+
+            .play-buttons-container{
+                width: 500px;
+                height: 70%;
+            }
+
+            .play-duck {
+                width: 140px;
+                height: 80px;
+                top: 385px;
+                left: 0;
+            }
+
+            .play-cat {
+                width: 180px;
+                height: 120px;
+                top: 220px;
+                left: 120px;
+                transform: translateX(-50%);
+            }
+
+            .play-chicken {
+                width: 180px;
+                height: 140px;
+                top: 350px;
+                left: 80px;
+                transform: translateX(-50%);
+            }
+
+            .play-dog {
+                width: 125px;
+                height: 120px;
+                top: 350px;
+                left: 30px;
+            }
+        }
+    </style>
+    <title>Gameplay - Quiz</title>
+</head>
+<body>
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="option-button"></button>
+        <div class="dropdown-content">
+            <button onclick="optionClicked('home')" id="home" class="home"></button>
+            <button onclick="optionClicked('sound')" id="sound" class="sound"></button>
+            <button onclick="optionClicked('music')" id="music" class="music"></button>
+            <button onclick="optionClicked('exit')" id="exit" class="exit"></button>
+            <button onclick="optionClicked('repeat')" id="repeat" class="repeat"></button>
+        </div>
+    </div>
+
+    <div class="play-buttons-container">
+        <button onclick="playGame('Duck')" class="play-button play-duck"></button>
+        <button onclick="playGame('Cat')" class="play-button play-cat"></button>
+        <button onclick="playGame('Chicken')" class="play-button play-chicken"></button>
+        <button onclick="playGame('Dog')" class="play-button play-dog"></button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Create an array of Audio elements
+        const audioArray = [
+            new Audio('duckQuack.mp3'),//0
+            new Audio('catMeow.mp3'),//1
+            new Audio('roosterSound.mp3'),//2
+            new Audio('dogBark.mp3')//3
+        ];
+
+        // Function to play a random audio from the array
+        function playRandomAudio() {
+            musicSound.pause();
+            if(musicSound.paused){
+                var musicBtn = document.getElementById('music');
+                musicBtn.style.background = "url('musicMuteBtn.png') no-repeat";
+                musicBtn.style.backgroundSize = "cover";
+                musicBtn.style.backgroundPosition = "center";
+            }
+            // Get a random index from the array
+            const randomIndex = Math.floor(Math.random() * audioArray.length);
+
+            // Get the random Audio element from the array
+            const randomAudio = audioArray[randomIndex];
+
+            // Play the random audio
+            randomAudio.play();
+
+            // Return the index to use for checking the correct answer
+            return randomIndex;
+        }
+
+        // Play a random audio before the user interacts
+        const initialAudioIndex = playRandomAudio();
+        alert("Listen to the audio playing");
+
+        function playGame(animal) {
+            // Mapping of animal names to their corresponding indices
+            const animalIndices = {
+                'Duck': 0,
+                'Cat': 1,
+                'Chicken': 2,
+                'Dog': 3
+            };
+
+            // Check if the selected animal matches the correct one
+            if (animalIndices[animal] === initialAudioIndex) {
+                // Correct selection
+                alert('Correct!');
+            } else {
+                // Incorrect selection
+                alert('Incorrect!');
+            }
+        }
+        window.onload = function() {
+            const initialAudioIndex = playRandomAudio();
+            alert("Listen to the audio playing");
+        };
+    </script>
+</body>
+</html>

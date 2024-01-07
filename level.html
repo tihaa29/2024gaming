@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: url('bg4.png') no-repeat center center fixed; 
+            background-size: cover;
+        }
+
+        /* Start button */
+        .start-button{
+            padding: 40px 80px;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-color: yellow;
+            color: black;
+            cursor: pointer;
+            margin-top: 150px;
+            transform:translatex(-14px) translatey(-11px);
+            border-radius:40px;
+        }
+
+        @media (max-width: 767px) {
+            body {
+                margin: 0;
+                padding: 0;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                background: url('bg4.png') no-repeat center center fixed;
+                background-size: 767px 100%;
+            }
+
+            .start-button {
+                padding: 20px 40px;
+                font-size: 25px;
+                width: 30%;
+                height: 10%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+    <title>Kiddy World Games</title>
+</head>
+<body>
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="option-button"></button>
+        <div class="dropdown-content">
+            <button onclick="optionClicked('home')" id="home" class="home"></button>
+            <button onclick="optionClicked('sound')" id="sound" class="sound"></button>
+            <button onclick="optionClicked('music')" id="music" class="music"></button>
+            <button onclick="optionClickedMain('exit')" id="exit" class="exit"></button>
+        </div>
+    </div>
+
+    <button onclick="startGame()" class="start-button">Start</button>
+    <script src="script.js"></script>
+    <script>
+        if(!musicSound.paused){
+            var musicBtn = document.getElementById('music');
+            musicBtn.style.background = "url('musicBtn.jpg') no-repeat";
+            musicBtn.style.backgroundSize = "cover";
+            musicBtn.style.backgroundPosition = "center";
+        }
+        function optionClickedMain(id){
+            if(id === "exit"){
+                window.location.href = "https://www.google.com";
+            }
+        }
+    </script>
+</body>
+</html>
